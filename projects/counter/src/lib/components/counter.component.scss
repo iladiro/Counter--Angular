@@ -1,0 +1,152 @@
+@import "../styles/mixin";
+
+.i-counter {
+  $this: &;
+  background-color: #e4e5ea;
+  font-family: arial;
+  font-size: 16px;
+  padding: 10px;
+  &.expired {
+    #{$this}__expired-alert {
+      display: block;
+    }
+  }
+  &__title {
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 15px;
+    @include font-style(1.5em, #42474D, normal, 1.4375em);
+  }
+  &__progressbar {
+    margin-bottom: 15px;
+    &-line {
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      @include flex();
+      @include flex-align(center);
+      margin-bottom: 5px;
+      &--default {
+        height: 0.4375em;
+      }
+      &--xs {
+        height: 0.25em;
+      }
+      &--sm {
+        height: 0.625em;
+      }
+      &--md {
+        height: 0.875em;
+      }
+      &--lg {
+        height: 1.3125em;
+      }
+      &--xxl {
+        height: 1.75em;
+      }
+      &-missing {
+        height: 1px;
+        background-color: #A8ADB0;
+      }
+      &-past {
+        @include size(100%, 100%);
+        background-color: #d49c9c;
+        //background: linear-gradient(306.6deg, #FF3C00 0%, #FFA400 100%);
+        //@include box-shadow(0 3px 10px 0 rgba(112,112,112,0.5));
+        border-radius: 35px;
+        
+      }
+    }
+    &-percentage {
+      @include flex();
+      @include justify-content(space-between);
+      @include font-style(0.625em, #A8ADB0, normal, 1.4375em);
+      &--default {
+        font-size: 0.625em;
+      }
+      &--xs {
+        font-size: 0.25em;
+      }
+      &--sm {
+        font-size: 0.625em;
+      }
+      &--md {
+        font-size: 0.875em;
+      }
+      &--lg {
+        font-size: 1.3125em;
+      }
+      &--xxl {
+        font-size: 1.75em;
+      }
+    }
+  }
+  &__countdown {
+    $this: &;
+    &-time {
+      @include flex();
+      @include justify-content(space-around);
+      text-align: center;
+    }
+    &-label {
+      @include font-style(0.625em, #A8ADB0, normal, 1.4375em);
+    }
+    &-value {
+      @include font-style(0.75em, #42474D, bold, 1.4375em);
+      margin: 0;
+    }
+    &--default {
+      #{$this}-label {
+        font-size: 0.625em;
+      } 
+      #{$this}-value {
+        font-size: 0.75em;
+      }      
+    }
+    &--xs {
+      #{$this}-label {
+        font-size: 0.25em;
+      } 
+      #{$this}-value {
+        font-size: 0.35em;
+      }       
+    }
+    &--sm {    
+      #{$this}-label {
+        font-size: 0.625em;
+      } 
+      #{$this}-value {
+        font-size: 0.675em;
+      } 
+    }
+    &--md {      
+      #{$this}-label {
+        font-size: 0.875em;
+      } 
+      #{$this}-value {
+        font-size: 0.890em;
+      } 
+    }
+    &--lg {
+      #{$this}-label {
+        font-size: 1.3125em;
+      } 
+      #{$this}-value {
+        font-size: 1.4125em;
+      }   
+    }
+    &--xxl {      
+      #{$this}-label {
+        font-size: 1.75em;
+      } 
+      #{$this}-value {
+        font-size: 1.80em;
+      }  
+    }
+  }
+  &__expired-alert {
+    text-align: center;
+    margin-bottom: 0;
+    margin-top: 20px;
+  }
+}

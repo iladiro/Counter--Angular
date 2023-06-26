@@ -1,0 +1,164 @@
+@mixin spaces($padding, $margin){
+    padding: $padding;
+    margin: $margin;
+  }
+  
+  @mixin border($color, $size: 1px, $side: nil, $type: solid){
+    @if ($side == 'nil') {
+      border: $size $type $color;
+    } @else {
+      border-#{$side}: $size $type $color;
+    }
+  }
+  
+  @mixin radius($size) {
+    width: $size;
+    height: $size;
+    line-height: $size;
+    border-radius: 50% !important;
+    text-align: center;
+  }
+  
+  @mixin size($width, $height){
+    width: $width;
+    height: $height;
+  }
+  
+  @mixin font-style($size, $color, $weight: nil, $line-height: normal, $letter-spacing: normal, $font-family: nil){
+    @if ($font-family != 'nil') {
+        font-family: $font-family;
+    }
+    @if ($weight != 'nil') {
+        font-weight: $weight;
+    }   
+    letter-spacing: $letter-spacing;
+    font-size: $size;
+    color: $color;
+    line-height: $line-height;
+  }
+  
+  @mixin bg-size($size: cover){
+    -webkit-background-size: $size;
+    -moz-background-size: $size;
+    -o-background-size: $size;
+    background-size: $size;
+  }
+  
+  @mixin position($x, $Xval, $y, $Yval, $zindex: nil, $type: absolute){
+    position: $type;
+    #{$x}: $Xval;
+    #{$y}: $Yval;
+    @if ($zindex != 'nil') {
+      z-index: $zindex;
+    }    
+  }
+  
+  @mixin respond-to($type, $query){
+    @media($type: $query){
+      @content;
+    }
+  }
+  
+  @mixin transition($transition...) {
+    -moz-transition:    $transition;
+    -o-transition:      $transition;
+    -webkit-transition: $transition;
+    transition:         $transition;
+  }
+  
+  @mixin transform($transform...) {
+    transform: $transform;
+    -ms-transform: $transform; /* prefix for IE 9 */
+    -webkit-transform: $transform; /* prefix for Safari and Chrome */
+  }
+  
+  
+  @mixin placeholder($color: $input-color-placeholder) {
+    // Firefox
+    &::-moz-placeholder {
+      color: $color;
+      opacity: 1; // Override Firefox's unusual default opacity; see https://github.com/twbs/bootstrap/pull/11526
+    }
+    &:-ms-input-placeholder { color: $color; } // Internet Explorer 10+
+    &::-webkit-input-placeholder  { color: $color; } // Safari and Chrome
+  }
+  
+  @mixin box-shadow($shadow...) {
+    -webkit-box-shadow: $shadow; // iOS <4.3 & Android <4.1
+            box-shadow: $shadow;
+  }
+  
+  @mixin flex-align($x) {
+    -webkit-box-align: $x;
+    -ms-flex-align: $x;
+    align-items: $x;
+  }
+  
+  @mixin flex-direction($val: row) {
+    @if ($val == column) {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+      flex-direction: column;
+    } @else {
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+      flex-direction: row;
+    }
+  }
+  
+  @mixin flex() {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  
+  @mixin flex-grow($int: 1) {
+    -webkit-box-flex: $int;
+       -moz-box-flex: $int;
+   -webkit-flex-grow: $int;
+            -ms-flex: $int;
+           flex-grow: $int;
+  }
+  
+  @mixin justify-content($value: flex-start) {
+    @if $value == flex-start {
+      -webkit-box-pack: start;
+         -moz-box-pack: start;
+         -ms-flex-pack: start;
+    } @else if $value == flex-end {
+      -webkit-box-pack: end;
+         -moz-box-pack: end;
+         -ms-flex-pack: end;
+    } @else if $value == space-between {
+      -webkit-box-pack: justify;
+         -moz-box-pack: justify;
+         -ms-flex-pack: justify;
+    } @else if $value == space-around {
+         -ms-flex-pack: distribute;
+    } @else {
+      -webkit-box-pack: $value;
+         -moz-box-pack: $value;
+         -ms-flex-pack: $value;
+    }
+    -webkit-justify-content: $value;
+            justify-content: $value;
+  }
+  
+  @mixin animation($args...) {
+    -webkit-animation: $args; /* Safari 4.0 - 8.0 */
+    animation: $args;
+  }
+  
+  @mixin opacity($opacity) {
+    opacity: $opacity;
+    // IE8 filter
+    $opacity-ie: ($opacity * 100);
+    filter: alpha(opacity=$opacity-ie);
+  }
+
+  @mixin backfaceVisibility($value) {
+    -webkit-backface-visibility: $value;
+    backface-visibility: $value;
+  }

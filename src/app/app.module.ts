@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { CounterModule } from 'projects/counter/src/public-api';
+import { CounterModule } from 'Counter';
 
 @NgModule({
   declarations: [

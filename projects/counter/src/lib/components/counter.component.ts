@@ -44,7 +44,7 @@ export class CounterComponent implements OnChanges, OnDestroy, AfterViewInit {
   progressbarRun!: any;
   countdownRun!: any;
 
-  constructor(private cdRef:ChangeDetectorRef) {}
+  constructor(public cdRef:ChangeDetectorRef) {}
 
   convertToTimeStamp(value: string): number {
     return new Date(value).getTime();

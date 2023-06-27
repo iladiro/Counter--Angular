@@ -4,11 +4,11 @@ Angular Counter plugin with countdown and progress bar, flexible and easily cust
 # Before start
 
   1. npm i @iladiro/angular-counter
-  2. Import IladiroCounterModule into your module
+  2. Import IladiroCounterModule into your module from import { IladiroCounterModule } from '@iladiro/angular-counter';
 
 # Getting Setup
 
-  Use <iladiro-counter></iladiro-counter> selector to show the counter
+  Use ```<iladiro-counter></iladiro-counter>``` selector to show the counter
 
   Note: The example below shows the mandatory data!
 

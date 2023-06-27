@@ -11,6 +11,7 @@ import { CountDownLabel } from '../interfaces/countdownlabel';
 })
 export class CounterComponent implements OnChanges, OnDestroy, AfterViewInit {  
 
+  @Input() customClass!: string;
   @Input() title!: string;
   @Input() expiredAlertText: string = 'Time out';
   @Input() startDate!: string;

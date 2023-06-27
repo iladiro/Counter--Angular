@@ -1,8 +1,18 @@
 @import "../styles/mixin";
 
+$sm: 0.625;
+$md: 0.875;
+$lg: 1.3125;
+$xxl: 1.75;
+
+
+$size: (sm, $sm),
+        (md, $md),
+        (lg, $lg),
+        (xxl, $xxl);
+
 .i-counter {
   $this: &;
-  //background-color: #e4e5ea;
   font-family: arial;
   font-size: 16px;
   padding: 10px;
@@ -13,33 +23,22 @@
   }
   &__title {
     text-align: center;
-    margin-top: 0;
-    margin-bottom: 15px;
+    margin-top: 0 0 15px 0;
     @include font-style(1.5em, #42474D, normal, 1.4375em);
   }
   &__progressbar {
     margin-bottom: 15px;
     &-line {
-      width: 100%;
+      @include size(100%, 0.4375em);
       position: relative;
       overflow: hidden;
       @include flex();
       @include flex-align(center);
       margin-bottom: 5px;
-      &--default {
-        height: 0.4375em;
-      }
-      &--sm {
-        height: 0.625em;
-      }
-      &--md {
-        height: 0.875em;
-      }
-      &--lg {
-        height: 1.3125em;
-      }
-      &--xxl {
-        height: 1.75em;
+      @each $label, $value in $size {
+        &--#{$label} {          
+          height: #{$value}em;
+        }
       }
       &-missing {
         @include size(100%, 100%);        
@@ -59,23 +58,10 @@
       @include flex();
       @include justify-content(space-between);
       @include font-style(0.625em, #A8ADB0, normal, 1.4375em);
-      &--default {
-        font-size: 0.625em;
-      }
-      &--xs {
-        font-size: 0.25em;
-      }
-      &--sm {
-        font-size: 0.625em;
-      }
-      &--md {
-        font-size: 0.875em;
-      }
-      &--lg {
-        font-size: 1.3125em;
-      }
-      &--xxl {
-        font-size: 1.75em;
+      @each $label, $value in $size {
+        &--#{$label} {          
+          font-size: #{$value}em;
+        }
       }
     }
   }
@@ -93,58 +79,20 @@
       @include font-style(0.75em, #42474D, bold, 1.4375em);
       margin: 0;
     }
-    &--default {
-      #{$this}-label {
-        font-size: 0.625em;
-      } 
-      #{$this}-value {
-        font-size: 0.75em;
-      }      
-    }
-    &--xs {
-      #{$this}-label {
-        font-size: 0.25em;
-      } 
-      #{$this}-value {
-        font-size: 0.35em;
-      }       
-    }
-    &--sm {    
-      #{$this}-label {
-        font-size: 0.625em;
-      } 
-      #{$this}-value {
-        font-size: 0.675em;
-      } 
-    }
-    &--md {      
-      #{$this}-label {
-        font-size: 0.875em;
-      } 
-      #{$this}-value {
-        font-size: 0.890em;
-      } 
-    }
-    &--lg {
-      #{$this}-label {
-        font-size: 1.3125em;
-      } 
-      #{$this}-value {
-        font-size: 1.4125em;
-      }   
-    }
-    &--xxl {      
-      #{$this}-label {
-        font-size: 1.75em;
-      } 
-      #{$this}-value {
-        font-size: 1.80em;
-      }  
+    @each $label, $value in $size {
+      &--#{$label} {  
+        #{$this}-label {
+          font-size: #{$value}em;
+        }
+        #{$this}-value {
+          font-size: #{$value + 0.5}em;
+        }
+        
+      }
     }
   }
   &__expired-alert {
     text-align: center;
-    margin-bottom: 0;
-    margin-top: 20px;
+    margin: 20px 0 0 0;
   }
 }

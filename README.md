@@ -24,7 +24,7 @@ Angular Counter plugin with countdown and progress bar, flexible and easily cust
   ------------ | ------------- | ------------- | ------------- | -------------
   startDate | ``` string ``` | yes | ``` undefined ``` | The format to be used is yyyy/mm/dd hh:mm:ss
   endDate | ``` string ``` | yes | ``` undefined ``` | The format to be used is yyyy/mm/dd hh:mm:ss
-  title | ``` "string" ``` | no | ``` undefined ``` | If this data is not passed, the title will not be displayed
+  title | ``` string ``` | no | ``` undefined ``` | If this data is not passed, the title will not be displayed
   customClass | ``` string ``` | no | ``` undefined ``` | It can be useful to add a custom class to the counter
   expiredAlertText | ``` string ``` | no | ``` Time is expired ``` | This string is shown at the end of the countdown
   progressbarSize | ``` string ``` | no | ``` undefined ``` | To have different sizes (sm - md - lg - xxl)

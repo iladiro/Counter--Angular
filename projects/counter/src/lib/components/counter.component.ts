@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { CurrentDate } from '../interfaces/currentDate';
 import { ProgressbarLabel } from '../interfaces/progressbarlabel';
@@ -9,9 +9,7 @@ import { CountDownLabel } from '../interfaces/countdownlabel';
   templateUrl: './counter.component.html',
   styleUrls: ['./counter.component.scss']
 })
-export class CounterComponent {
-
-  private onDestroy$ = new Subject<void>();
+export class CounterComponent implements OnChanges, OnDestroy, AfterViewInit {  
 
   @Input() title!: string;
   @Input() expiredAlertText: string = 'Time out';
@@ -19,6 +17,12 @@ export class CounterComponent {
   @Input() endDate!: string;
   @Input() progressbarSize!: string;
   @Input() progressbarColor!: string;
+  @Input() daysLabel = 'days';
+  @Input() hoursLabel = 'hours';
+  @Input() minutesLabel = 'minutes';
+  @Input() secondsLabel = 'seconds';
+
+  @Output() expiredEvent = new EventEmitter();
 
   @ViewChild('missing') missing!: ElementRef;
   @ViewChild('past') past!: ElementRef;
@@ -76,17 +80,6 @@ export class CounterComponent {
     ) / (1000 * 3600 * 24);
   }
 
-  calculatePastDays(): number {
-    return (
-      this.convertToTimeStamp(this.getCurrentDate().dateTime) -
-      this.convertToTimeStamp(this.startDate)
-    ) / (1000 * 3600 * 24);
-  }
-
-  calculateMissingDays(): number {
-    return this.totalDays - this.calculatePastDays();
-  }
-
   dateValidation(value: string): boolean {
     const rejex = /[0-9]{4}[\/\-](0[1-9]|1[0-2])[\/\-](0[1-9]|[1-2][0-9]|3[0-1]) (2[0-3]|[01][0-9]):[0-5][0-9]/;
     const res = value.match(rejex);
@@ -97,43 +90,22 @@ export class CounterComponent {
     return (100 * partialValue) / totalValue;
   }
 
-  calculatePercentageInTime() {
+  calculatePercentageInTime(): ProgressbarLabel {
     return {
-      "missingDaysPercent": this.percentage(
+      "missing": this.percentage(
         this.calculateMissingTime(), this.totalTime
       ),
-      "pastDaysPercent": this.percentage(
+      "past": this.percentage(
         this.calculatePastTime(), this.totalTime
       )
     }
   }
 
-  calculatePercentageInDays() {
-    return {
-      "missingDaysPercent": this.percentage(
-        this.calculateMissingDays(), this.totalDays
-      ),
-      "pastDaysPercent": this.percentage(
-        this.calculatePastDays(), this.totalDays
-      )
-    }
-  }
-
-  progressCounterBar(): ProgressbarLabel {
-    this.distance = this.calculateMissingTime();
-
-    const missingPerc = this.calculatePercentageInTime().missingDaysPercent;
-    const pastPerc = this.calculatePercentageInTime().pastDaysPercent;
-
-    const condition = this.distance <= 0;
-
-    return {
-      missing: condition ? 0 : missingPerc,
-      past: condition ? 0 : pastPerc
-    }
+  isExpired(): boolean {
+    return this.calculateMissingTime() < 0;
   }
   
-  countdown(): CountDownLabel {
+  countdown(isExpired: boolean): CountDownLabel {
     this.distance = this.calculateMissingTime();
 
     // Time calculations for days, hours, minutes and seconds
@@ -142,11 +114,7 @@ export class CounterComponent {
     const minutes = Math.floor((this.distance % (1000 * 3600)) / (1000 * 60));
     const seconds = Math.floor((this.distance % (1000 * 60)) / 1000);
 
-    const isExpired = this.distance <= 0;
-
-    if(isExpired) {      
-      this.expired = true;
-    }
+    //const isExpired = this.isExpired();
 
     return {
       days: isExpired ? 0 : days,
@@ -156,12 +124,26 @@ export class CounterComponent {
     }
   }
 
-  resizeProgressCounterBar(obj: ProgressbarLabel): void {   
-    this.missing.nativeElement.attributes['style'].value = `width: ${obj.missing}%;`;
-    this.past.nativeElement.attributes['style'].value = `width: ${obj.past !== 0 ? obj.past : 100}%`;
+  progressCounterBar(): ProgressbarLabel {
+    this.distance = this.calculateMissingTime();
 
-    this.missingPercentage = obj.missing !== 0 ? Math.round(obj.missing) : 100;
-    this.pastPercentage = Math.round(obj.past);   
+    const missingPerc = this.calculatePercentageInTime().missing;
+    const pastPerc = this.calculatePercentageInTime().past;
+
+    const condition = this.distance < 0;    
+
+    return {
+      missing: condition ? 0 : missingPerc,
+      past: condition ? 100 : pastPerc
+    }
+  }
+
+  resizeProgressCounterBar(obj: ProgressbarLabel): void {    
+    this.missing.nativeElement.attributes['style'].value = `width: ${obj.missing}%;`;
+    this.past.nativeElement.attributes['style'].value = `width: ${obj.past}%`;
+
+    this.missingPercentage = Math.round(obj.missing);
+    this.pastPercentage = Math.round(obj.past);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -169,29 +151,24 @@ export class CounterComponent {
       if((this.dateValidation(changes['startDate'].currentValue) === false) || (this.dateValidation(changes['endDate'].currentValue) === false)) {        
         console.log("Incorrect startDate or endDate values");
       } else {
-        this.totalDays = this.calculateTotalDays(changes['startDate'].currentValue, changes['endDate'].currentValue);
-        this.totalTime = this.calculateTotalTime(changes['startDate'].currentValue, changes['endDate'].currentValue);
+        if(this.convertToTimeStamp(changes['endDate'].currentValue) > this.convertToTimeStamp(changes['startDate'].currentValue)) {
+          this.totalDays = this.calculateTotalDays(changes['startDate'].currentValue, changes['endDate'].currentValue);
+          this.totalTime = this.calculateTotalTime(changes['startDate'].currentValue, changes['endDate'].currentValue);
+        } else {
+          console.log("la data di fine deve essere maggiore della data di inizio");
+        }       
       }
     }     
   }
 
-  ngAfterViewInit(): void {
-    this.resizeProgressCounterBar(this.progressCounterBar());
-
-    this.countdownRun = setInterval(() => {
-      const count = this.countdown();
-      this.days = count.days;
-      this.hours = count.hours;
-      this.minutes = count.minutes;
-      this.seconds = count.seconds;
-    }, 1000);
-
-    this.progressbarRun = setInterval(() => {
-      this.resizeProgressCounterBar(this.progressCounterBar());
-    }, 6000);
+  settingDate(count: CountDownLabel): void {
+    this.days = count.days;
+    this.hours = count.hours;
+    this.minutes = count.minutes;
+    this.seconds = count.seconds;
   }
 
-  ngOnDestroy(): void {
+  clearAllaSetInterval(): void {
     if(this.countdownRun) {
       clearInterval(this.countdownRun);
     }
@@ -199,6 +176,37 @@ export class CounterComponent {
     if(this.progressbarRun) {
       clearInterval(this.progressbarRun);
     }
+  }
+
+  ngAfterViewInit(): void {  
+    if(this.isExpired()) {
+      this.resizeProgressCounterBar(this.progressCounterBar());
+      this.settingDate(this.countdown(true));      
+    } else {
+      this.resizeProgressCounterBar(this.progressCounterBar());
+
+      this.countdownRun = setInterval(() => {           
+        if(this.isExpired()){          
+          clearInterval(this.countdownRun);
+          this.expired = true;
+          this.expiredEvent.emit(true);
+        } else {
+          this.settingDate(this.countdown(false));
+        }         
+      }, 1000);
+
+      this.progressbarRun = setInterval(() => {
+        if(this.isExpired()){
+          clearInterval(this.progressbarRun);
+        } else {
+          this.resizeProgressCounterBar(this.progressCounterBar());
+        }          
+      }, 6000);
+    } 
+  }
+
+  ngOnDestroy(): void {
+    this.clearAllaSetInterval();
   }
 
 }

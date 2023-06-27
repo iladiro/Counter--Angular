@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'CounterLibrary';
+
+  counteDownExpired(event: boolean) {
+    console.log(event);
+  }
 }

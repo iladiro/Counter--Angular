@@ -3,32 +3,34 @@
 		{{title}}
 	</h3>
   	<div class="i-counter__progressbar" data-counter="progressbar">
-		<div class="i-counter__progressbar-line" [class]="'i-counter__progressbar-line--' + (progressbarSize ? progressbarSize : 'default')">
-			<div></div><span class="i-counter__progressbar-line-past" #past data-counter="past" style="width: 0%;" [class]="progressbarColor"></span>
-			<span class="i-counter__progressbar-line-missing" #missing data-counter="missing" style="width: 100%;"></span>			
+		<div class="i-counter__progressbar-line" [class]="'i-counter__progressbar-line--' + (progressbarSize ? progressbarSize : 'default')">			
+			<div class="i-counter__progressbar-line-missing" #missing data-counter="missing" [style.width]="'100%'">
+				<span [style.backgroundColor]="progressbarColor"></span>
+			</div>			
+			<span class="i-counter__progressbar-line-past" #past data-counter="past" style="width: 0%;"></span>			
 		</div>
 		<div class="i-counter__progressbar-percentage" [class]="'i-counter__progressbar-percentage--'  + (progressbarSize ? progressbarSize : 'default')" data-counter="progressbar_percentage">
-			<span class="i-counter__progressbar-percentage-past" data-counter="past_percentage">{{pastPercentage}}%</span>
 			<span class="i-counter__progressbar-percentage-missing" data-counter="missing_percentage">{{missingPercentage}}%</span>			
+			<span class="i-counter__progressbar-percentage-past" data-counter="past_percentage">{{pastPercentage}}%</span>			
 		</div>
 	</div>
   	<div class="i-counter__countdown" [class]="'i-counter__countdown--' + (progressbarSize ? progressbarSize : 'default')">
 		<div class="i-counter__countdown-time" data-counter="countdown">
 			<div>
 				<p class="i-counter__countdown-value" data-counter="days">{{days}}</p>
-				<label class="i-counter__countdown-label" data-counter="days_label">days</label>
+				<label class="i-counter__countdown-label" data-counter="days_label">{{daysLabel}}</label>
 			</div>
 			<div>
 				<p class="i-counter__countdown-value" data-counter="hours">{{hours}}</p>
-				<label class="i-counter__countdown-label" data-counter="hours_label">hours</label>
+				<label class="i-counter__countdown-label" data-counter="hours_label">{{hoursLabel}}</label>
 			</div>
 			<div>
 				<p class="i-counter__countdown-value" data-counter="minutes">{{minutes}}</p>
-				<label class="i-counter__countdown-label" data-counter="minutes_label">min</label>
+				<label class="i-counter__countdown-label" data-counter="minutes_label">{{minutesLabel}}</label>
 			</div>
 			<div>
 				<p class="i-counter__countdown-value" data-counter="seconds">{{seconds}}</p>
-				<label class="i-counter__countdown-label" data-counter="seconds_label">sec</label>
+				<label class="i-counter__countdown-label" data-counter="seconds_label">{{secondsLabel}}</label>
 			</div>
 		</div>		
   	</div>

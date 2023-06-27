@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { CurrentDate } from '../interfaces/currentDate';
 import { ProgressbarLabel } from '../interfaces/progressbarlabel';
@@ -43,7 +43,7 @@ export class CounterComponent implements OnChanges, OnDestroy, AfterViewInit {
   progressbarRun!: any;
   countdownRun!: any;
 
-  constructor() {}
+  constructor(private cdRef:ChangeDetectorRef) {}
 
   convertToTimeStamp(value: string): number {
     return new Date(value).getTime();
@@ -203,6 +203,8 @@ export class CounterComponent implements OnChanges, OnDestroy, AfterViewInit {
         }          
       }, 6000);
     } 
+
+    this.cdRef.detectChanges();
   }
 
   ngOnDestroy(): void {

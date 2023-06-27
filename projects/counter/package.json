@@ -1,6 +1,8 @@
 {
-  "name": "counter",
+  "name": "@iladiro/angular-counter",
   "version": "0.0.1",
+  "description": "Angular Counter plugin with countdown and progress bar, flexible and easily customizable",
+  "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^15.2.0",
     "@angular/core": "^15.2.0"
@@ -8,5 +10,25 @@
   "dependencies": {
     "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "keywords": [
+    "counter",
+    "npm",
+    "package",
+    "iladiro",
+    "countdown",
+    "progressbar",
+    "typescript",
+    "angular 15",
+    "angular"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iladiro/Counter--Angular"
+  },
+  "author": {
+    "name": "Iladiro",
+    "email": "dirosa.ilaria@gmail.com",
+    "url": "http://ilariadirosa.it/"
+  }
 }

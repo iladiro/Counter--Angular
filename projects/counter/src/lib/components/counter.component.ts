@@ -13,15 +13,15 @@ export class CounterComponent implements OnChanges, OnDestroy, AfterViewInit {
 
   @Input() customClass!: string;
   @Input() title!: string;
-  @Input() expiredAlertText: string = 'Time out';
+  @Input() expiredAlertText: string = 'Time is expired';
   @Input() startDate!: string;
   @Input() endDate!: string;
   @Input() progressbarSize!: string;
   @Input() progressbarColor!: string;
-  @Input() daysLabel = 'days';
-  @Input() hoursLabel = 'hours';
-  @Input() minutesLabel = 'minutes';
-  @Input() secondsLabel = 'seconds';
+  @Input() daysLabel = 'Days';
+  @Input() hoursLabel = 'Hours';
+  @Input() minutesLabel = 'Minutes';
+  @Input() secondsLabel = 'Seconds';
 
   @Output() expiredEvent = new EventEmitter();
 

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { CounterModule } from 'Counter';
+import { IladiroCounterModule } from 'Counter';
 
 @NgModule({
   declarations: [
@@ -10,7 +10,7 @@ import { CounterModule } from 'Counter';
   ],
   imports: [
     BrowserModule,
-    CounterModule
+    IladiroCounterModule  
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CounterComponent } from './components/counter.component';
 import { CommonModule } from '@angular/common';
 
-
-
 @NgModule({
   declarations: [
     CounterComponent
@@ -15,4 +13,4 @@ import { CommonModule } from '@angular/common';
     CounterComponent
   ]
 })
-export class CounterModule { }
+export class IladiroCounterModule { }

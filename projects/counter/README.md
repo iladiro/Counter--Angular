@@ -1,24 +1,37 @@
 # Counter
+Angular Counter plugin with countdown and progress bar, flexible and easily customizable
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.0.
+# Before start
 
-## Code scaffolding
+  1. npm i @iladiro/angular-counter
+  2. Import IladiroCounterModule into your module
 
-Run `ng generate component component-name --project Counter` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project Counter`.
-> Note: Don't forget to add `--project Counter` or else it will be added to the default project in your `angular.json` file. 
+# Getting Setup
 
-## Build
+  Use <iladiro-counter></iladiro-counter> selector to show the counter
 
-Run `ng build Counter` to build the project. The build artifacts will be stored in the `dist/` directory.
+  Note: The example below shows the mandatory data!
 
-## Publishing
+      ```
+      <iladiro-counter [startDate]="'<yourDate>'" [endDate]="'<yourDate>'"></iladiro-counter>
+      ```
 
-After building your library with `ng build Counter`, go to the dist folder `cd dist/counter` and run `npm publish`.
+# Options
 
-## Running unit tests
+  Other options are available besides the mandatory ones
 
-Run `ng test Counter` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+  property | type | required | default | notes
+  ------------ | ------------- | ------------- | ------------- | -------------
+  startDate | ``` string ``` | yes | ``` undefined ``` | The format to be used is yyyy/mm/dd hh:mm:ss
+  endDate | ``` string ``` | yes | ``` undefined ``` | The format to be used is yyyy/mm/dd hh:mm:ss
+  title | ``` "string" ``` | no | ``` undefined ``` | If this data is not passed, the title will not be displayed
+  customClass | ``` string ``` | no | ``` undefined ``` | It can be useful to add a custom class to the counter
+  expiredAlertText | ``` string ``` | no | ``` Time is expired ``` | This string is shown at the end of the countdown
+  progressbarSize | ``` string ``` | no | ``` undefined ``` | To have different sizes (sm - md - lg - xxl)
+  progressbarColor | ``` string ``` | no | ``` undefined ``` | To change the color of the bar
+  daysLabel | ``` string ``` | no | ``` Days ``` | To show the day field label
+  hoursLabel | ``` string ``` | no | ``` Hours ``` | To show the hours field label
+  minutesLabel | ``` string ``` | no | ``` Minutes ``` | To show the minutes field label
+  secondsLabel | ``` string ``` | no | ``` Seconds ``` | To show the seconds field label
+  expiredEvent | ``` event ``` | no | ``` undefined ``` | When the counter expires, the event is issued. Value is a boolean
+  

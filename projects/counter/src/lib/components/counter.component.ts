@@ -36,21 +36,22 @@ export class CounterComponent implements OnChanges, OnDestroy, AfterViewInit {
   missingPercentage = 100;
   pastPercentage = 0;
 
-  distance!: number;
-  totalDays!: number;
-  totalTime!: number;
   expired = false;
 
-  progressbarRun!: any;
-  countdownRun!: any;
+  private distance!: number;
+  private totalDays!: number;
+  private totalTime!: number;  
+
+  private progressbarRun!: any;
+  private countdownRun!: any;
 
   constructor(public cdRef:ChangeDetectorRef) {}
 
-  convertToTimeStamp(value: string): number {
+  private convertToTimeStamp(value: string): number {
     return new Date(value).getTime();
   }
 
-  getCurrentDate(): CurrentDate {
+  private getCurrentDate(): CurrentDate {
     const today = new Date();
     const date = `${today.getFullYear()}/${today.getMonth()+1}/${today.getDate()}`;
     const time = `${today.getHours()}:${today.getMinutes()}:${today.getSeconds()}`;
@@ -62,36 +63,36 @@ export class CounterComponent implements OnChanges, OnDestroy, AfterViewInit {
     }
   }
 
-  calculateTotalTime(start: string, end: string): number {
+  private calculateTotalTime(start: string, end: string): number {
     return this.convertToTimeStamp(end) - this.convertToTimeStamp(start);
   }
 
-  calculatePastTime(): number {
+  private calculatePastTime(): number {
     return this.convertToTimeStamp(this.getCurrentDate().dateTime) - this.convertToTimeStamp(this.startDate);
   }
 
-  calculateMissingTime(): number {      
+  private calculateMissingTime(): number {      
     return this.totalTime - this.calculatePastTime();
   }
 
-  calculateTotalDays(start: string, end: string): number {
+  private calculateTotalDays(start: string, end: string): number {
     return (
       this.convertToTimeStamp(end) -
       this.convertToTimeStamp(start)
     ) / (1000 * 3600 * 24);
   }
 
-  dateValidation(value: string): boolean {
+  private dateValidation(value: string): boolean {
     const rejex = /[0-9]{4}[\/\-](0[1-9]|1[0-2])[\/\-](0[1-9]|[1-2][0-9]|3[0-1]) (2[0-3]|[01][0-9]):[0-5][0-9]/;
     const res = value.match(rejex);
     return (res) ? true : false;
   }
 
-  percentage(partialValue: number, totalValue: number): number {
+  private percentage(partialValue: number, totalValue: number): number {
     return (100 * partialValue) / totalValue;
   }
 
-  calculatePercentageInTime(): ProgressbarLabel {
+  private calculatePercentageInTime(): ProgressbarLabel {
     return {
       "missing": this.percentage(
         this.calculateMissingTime(), this.totalTime
@@ -102,11 +103,11 @@ export class CounterComponent implements OnChanges, OnDestroy, AfterViewInit {
     }
   }
 
-  isExpired(): boolean {
+  private isExpired(): boolean {
     return this.calculateMissingTime() < 0;
   }
   
-  countdown(isExpired: boolean): CountDownLabel {
+  private countdown(isExpired: boolean): CountDownLabel {
     this.distance = this.calculateMissingTime();
 
     // Time calculations for days, hours, minutes and seconds
@@ -125,7 +126,7 @@ export class CounterComponent implements OnChanges, OnDestroy, AfterViewInit {
     }
   }
 
-  progressCounterBar(): ProgressbarLabel {
+  private progressCounterBar(): ProgressbarLabel {
     this.distance = this.calculateMissingTime();
 
     const missingPerc = this.calculatePercentageInTime().missing;
@@ -139,12 +140,29 @@ export class CounterComponent implements OnChanges, OnDestroy, AfterViewInit {
     }
   }
 
-  resizeProgressCounterBar(obj: ProgressbarLabel): void {    
+  private resizeProgressCounterBar(obj: ProgressbarLabel): void {    
     this.missing.nativeElement.attributes['style'].value = `width: ${obj.missing}%;`;
     this.past.nativeElement.attributes['style'].value = `width: ${obj.past}%`;
 
     this.missingPercentage = Math.round(obj.missing);
     this.pastPercentage = Math.round(obj.past);
+  }
+
+  private settingDate(count: CountDownLabel): void {
+    this.days = count.days;
+    this.hours = count.hours;
+    this.minutes = count.minutes;
+    this.seconds = count.seconds;
+  }
+
+  private clearAllaSetInterval(): void {
+    if(this.countdownRun) {
+      clearInterval(this.countdownRun);
+    }
+
+    if(this.progressbarRun) {
+      clearInterval(this.progressbarRun);
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -160,23 +178,6 @@ export class CounterComponent implements OnChanges, OnDestroy, AfterViewInit {
         }       
       }
     }     
-  }
-
-  settingDate(count: CountDownLabel): void {
-    this.days = count.days;
-    this.hours = count.hours;
-    this.minutes = count.minutes;
-    this.seconds = count.seconds;
-  }
-
-  clearAllaSetInterval(): void {
-    if(this.countdownRun) {
-      clearInterval(this.countdownRun);
-    }
-
-    if(this.progressbarRun) {
-      clearInterval(this.progressbarRun);
-    }
   }
 
   ngAfterViewInit(): void {  

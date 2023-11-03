@@ -12,9 +12,7 @@ Angular Counter plugin with countdown and progress bar, flexible and easily cust
 
   Note: The example below shows the mandatory data!
 
-      ```
-      <iladiro-counter [startDate]="'<yourDate>'" [endDate]="'<yourDate>'"></iladiro-counter>
-      ```
+  ```<iladiro-counter [startDate]="'<yourDate>'" [endDate]="'<yourDate>'"></iladiro-counter>```
 
 # Options
 

@@ -1,6 +1,6 @@
 {
   "name": "@iladiro/angular-counter",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Angular Counter plugin with countdown and progress bar, flexible and easily customizable",
   "license": "MIT",
   "peerDependencies": {

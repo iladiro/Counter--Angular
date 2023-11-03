@@ -5,9 +5,9 @@ Angular Counter plugin with countdown and progress bar, flexible and easily cust
 
 This library is compatible with Angular versions >=15.0.0.0
 
-Note: Please use version 0.0.6, which is compatible with Angular versions >=15.0.0, older versions are only compatible with Angular version ^15.2.0. It was my mistake! Thank you
+Note: Please use version 0.0.7, which is compatible with Angular versions >=15.0.0, older versions are only compatible with Angular version ^15.2.0. It was my mistake! Thank you
 
-  1. npm i @iladiro/angular-counter@0.0.6
+  1. npm i @iladiro/angular-counter@0.0.7
   2. Import IladiroCounterModule into your module from import { IladiroCounterModule } from '@iladiro/angular-counter';
 
 # Getting Setup
